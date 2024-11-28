@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gestion_parking.h"
+
+int ajouter_parking(const char *filename, parking p) {
+    FILE *file = fopen(filename, "a");
+    if (!file) return 0;
+    fprintf(file, "%d;%s;%s;%.2f;%d;%s\n", p.id, p.nom, p.adresse, p.prix, p.capacite, p.type);
+    fclose(file);
+    return 1;
+}
+
+int modifier_parking(const char *filename, int id, parking p) {
+    // Implémentation pour modifier un parking
+    // À compléter
+    return 0;
+}
+
+
+
+    while (fscanf(file, "%d %s %s %f %d %s", &p.id, p.nom, p.adresse, &p.prix, &p.capacite, p.type) != EOF) {
+        if (p.id == id) {
+            found = 1; // Parking trouvé
+            continue; // Ne pas écrire ce parking dans le fichier temporaire
+        }
+        fprintf(tempFile, "%d %s %s %.2f %d %s\n", p.id, p.nom, p.adresse, p.prix, p.capacite, p.type);
+    }
+
+    fclose(file);
+    fclose(tempFile);
+
+    // Remplacer l'ancien fichier par le nouveau
+    remove(filename);
+    rename("temp.txt", filename);
+
+    return found; // Retourne 1 si le parking a été trouvé et supprimé, 0 sino}
+parking chercher_parking(const char *filename, int id) {
+    parking p;
+    p.id = -1; // Valeur par défaut si non trouvé
+    // Implémentation pour chercher un parking
+    // À compléter
+    return p;
+}
