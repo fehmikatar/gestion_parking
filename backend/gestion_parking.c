@@ -10,6 +10,7 @@ int ajouter_parking(const char *filename, parking p) {
         perror("Erreur lors de l'ouverture du fichier");
         return 0;
     }
+    p.agent_id=0;
     fprintf(file, "%d;%s;%s;%.2f;%d;%s;%d\n", p.id, p.nom, p.adresse, p.prix, p.capacite, p.type, p.agent_id);
     fclose(file);
     return 1;
