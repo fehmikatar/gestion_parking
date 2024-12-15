@@ -1,7 +1,5 @@
-123456;tawfik;omrani;tawfik@gmail.com;masculin;tunis;park1
-11;doua;omrani;omrani@gmail.com;masculin;tunis;park2
-12;doua;omranni;@gmail.com;mas;tunis;park3
-13;ahmed;ahmed;ahmed@gmail.com;tunis;park4
-14;mouhamed;ahmed;ahmed@gmail.com;tunis;park3
-15;ali;ahmed;ahmed@gmail.com;tunis;park1
-16;haythem;ahmed;ahmed@gmail.com;tunis;park1
+
+12345, fehmi, katar, katar@gmail.com, masculin, ariana, parking1, 1
+123456, doua, omrani, doua@gmail.com, femenin, ariana2, parking1, 0
+1234567, khalil, ajlani, ajlani@gmail.com, masculin, soukra, parking5, 1
+12345678, hyba, benyousef, hyba@gmail.com, femenin, soukra, parking5, 1

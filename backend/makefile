@@ -1,8 +1,12 @@
-prog: gestion_parking.o main.o
-	gcc gestion_parking.o main.o -o prog
+# Define the output program and object files
+gestion_agent: agent.o main.o
+    gcc agent.o main.o -o gestion_agent
 
-main.o: main.c gestion_parking.h
-	gcc -c main.c -g
+# Rule to compile main.c into main.o
+main.o: main.c
+    gcc -c main.c
 
-gestion_parking.o: gestion_parking.c gestion_parking.h
-	gcc -c gestion_parking.c -g
+# Rule to compile agent.c into agent.o
+agent.o: agent.c
+    gcc -c agent.c
+
