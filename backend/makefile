@@ -1,8 +1,6 @@
-prog: gestion_parking.o main.o
-	gcc gestion_parking.o main.o -o prog
-
-main.o: main.c gestion_parking.h
+reservation: reservation.o main.o
+	gcc reservation.o main.o -o reservation -g
+main.o: main.c reservation.h
 	gcc -c main.c -g
-
-gestion_parking.o: gestion_parking.c gestion_parking.h
-	gcc -c gestion_parking.c -g
+reservation.o: reservation.c reservation.h
+	gcc -c reservation.c -g
