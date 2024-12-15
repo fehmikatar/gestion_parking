@@ -1,8 +1,8 @@
-prog: gestion_parking.o main.o
-	gcc gestion_parking.o main.o -o prog
+service:service.o main.o
+	gcc service.o main.o -o service -g
 
-main.o: main.c gestion_parking.h
+main.o:main.c
 	gcc -c main.c -g
 
-gestion_parking.o: gestion_parking.c gestion_parking.h
-	gcc -c gestion_parking.c -g
+service.o:service.c
+	gcc -c service.c -g
