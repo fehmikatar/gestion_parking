@@ -1,32 +1,39 @@
 #ifndef RESERVATION_H
 #define RESERVATION_H
 
-typedef struct {
-    int jour;
-    char month[60];
-    int year;
-} date;
+#define MAX_RESERVATIONS 100
+#define MAX_PARKINGS 50
 
+// Structure de réservation
 typedef struct {
-    int id_reservation;
-    int id_Citoyen;
-    int id_parking;
-    int id_service;
-    date date_debut;
-    date date_fin;
-    char type_vehicule[10];
-} reservation;
+    int id;
+    char marque[20];
+    char modele[20];
+    char plaque[10];
+    int jours;
+    int heure_arrivee;
+    int heure_depart;
+} Reservation;
 
+// Structure de parking
 typedef struct {
-    int id_parking;
-    char nom_parking[100];
-    int places_disponibles;
-} parking;
+    int id;
+    char location[50];
+    int capacity;
+} Parking;
+// Fonctions liées aux réservations
+int charger_reservations(Reservation reservations[], const char* filename);
+void ajouter_reservation(const char* filename);
+void afficher_reservations(const char* filename);
+void supprimer_reservation(const char* filename, int id);
+void sauvegarder_reservations(Reservation reservations[], int n_reservations, const char* filename);
 
-void add_reservation(reservation r, const char *filename);
-void modify_reservation(int id_to_modify, const char *filename);  
-void delete_reservation(int id_reservation, const char *filename);
-void show_reservation_by_id(int id_reservation, const char *filename);
-void show_sorted_parkings(const char *filename);
+// Fonctions liées aux parkings
+int charger_parkings(Parking parkings[], const char* filename);
+void sauvegarder_parkings(Parking parkings[], int n_parkings, const char* filename);
+void choisir_parking(Parking parkings[], int n_parkings);
 
 #endif
+
+
+
