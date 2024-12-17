@@ -1,8 +1,15 @@
-prog: gestion_parking.o main.o
-	gcc gestion_parking.o main.o -o prog
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99
+TARGET = prog
 
-main.o: main.c gestion_parking.h
-	gcc -c main.c -g
+$(TARGET): gestion_parking.o agent.o main.o
+	$(CC) $(CFLAGS) gestion_parking.o agent.o main.o -o $(TARGET)
 
-gestion_parking.o: gestion_parking.c gestion_parking.h
-	gcc -c gestion_parking.c -g
+main.o: main.c
+	$(CC) $(CFLAGS) -c main.c
+
+gestion_parking.o: gestion_parking.c agent.c
+	$(CC) $(CFLAGS) -c gestion_parking.c
+
+clean:
+	rm -f *.o $(TARGET)
