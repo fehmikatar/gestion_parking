@@ -4,13 +4,16 @@
 #include <unistd.h>
 #include "agent.h"
 #include "gestion_parking.h"
+#include "service.h"
 
 int main() {
     int choix;
-    int id, agent_id;
+    int id, agent_id, idReservation, idService;
     Agent agent;
     parking p;
-    char date[11];  // Pour saisir la date à rechercher
+    Service service;
+    char date[20];
+    char nom[100], prenom[100];
 
     // Vérifier et créer les fichiers nécessaires s'ils n'existent pas
     if (access("reservations.txt", F_OK) == -1) {
@@ -30,20 +33,35 @@ int main() {
         if (file) fclose(file);
     }
 
+    if (access("services.txt", F_OK) == -1) {
+        printf("Le fichier services.txt n'existe pas, création...\n");
+        FILE *file = fopen("services.txt", "w");
+        if (file) fclose(file);
+    }
+
     do {
-        printf("\n--- Menu Principal de Gestion des Parkings et Agents ---\n");
+        printf("\n--- Menu Principal de Gestion des Parkings, Agents et Services ---\n");
         printf("Gestion des Agents:\n");
         printf("1. Ajouter un agent\n");
         printf("2. Modifier un agent\n");
         printf("3. Supprimer un agent\n");
         printf("4. Afficher tous les agents\n");
         printf("5. Afficher les réservations à une date\n");
+        
         printf("\nGestion des Parkings:\n");
         printf("6. Ajouter un parking\n");
         printf("7. Modifier un parking\n");
         printf("8. Supprimer un parking\n");
         printf("9. Afficher tous les parkings\n");
         printf("10. Affecter un agent à un parking\n");
+        
+        printf("\nGestion des Services:\n");
+        printf("11. Ajouter un service\n");
+        printf("12. Modifier un service\n");
+        printf("13. Supprimer un service\n");
+        printf("14. Afficher tous les services\n");
+        printf("15. Affecter un service à une réservation\n");
+        
         printf("\n0. Quitter\n");
         printf("Choisissez une option: ");
 
@@ -87,7 +105,7 @@ int main() {
                     break; // Revenir au menu principal
                 }
                 printf("Entrez la date (format YYYY-MM-DD) : ");
-                scanf("%10s", date);
+                scanf("%19s", date);
                 afficher_reservations(date, id);
                 break;
 
@@ -149,6 +167,62 @@ int main() {
                 } else {
                     printf("Erreur lors de l'affectation de l'agent.\n");
                 }
+                break;
+
+            // Gestion des Services
+            case 11:
+                // Ajouter un service
+                printf("Entrez l'ID du service: ");
+                scanf("%d", &service.id);
+                printf("Entrez le type de service: ");
+                scanf(" %[^\n]", service.type);
+                printf("Entrez la disponibilité: ");
+                scanf(" %[^\n]", service.disponibilite);
+                printf("Entrez le prix: ");
+                scanf("%f", &service.prix);
+                printf("Entrez le nombre maximum de clients: ");
+                scanf("%d", &service.maxClients);
+                ajouterService("services.txt", &service);
+                break;
+            case 12:
+                // Modifier un service
+                printf("Entrez l'ID du service à modifier: ");
+                scanf("%d", &idService);
+                printf("Entrez les nouvelles informations:\n");
+                printf("Type: ");
+                scanf(" %[^\n]", service.type);
+                printf("Disponibilité: ");
+                scanf(" %[^\n]", service.disponibilite);
+                printf("Prix: ");
+                scanf("%f", &service.prix);
+                printf("Nombre maximum de clients: ");
+                scanf("%d", &service.maxClients);
+                service.id = idService;
+                modifierService("services.txt", idService, &service);
+                break;
+            case 13:
+                // Supprimer un service
+                printf("Entrez l'ID du service à supprimer: ");
+                scanf("%d", &idService);
+                supprimerService("services.txt", idService);
+                break;
+            case 14:
+                // Afficher tous les services
+                afficherServices("services.txt");
+                break;
+            case 15:
+                // Affecter un service à une réservation
+                printf("Entrez l'ID de la réservation: ");
+                scanf("%d", &idReservation);
+                printf("Entrez l'ID du service: ");
+                scanf("%d", &idService);
+                printf("Entrez le nom du client: ");
+                scanf(" %[^\n]", nom);
+                printf("Entrez le prénom du client: ");
+                scanf(" %[^\n]", prenom);
+                printf("Entrez la date d'affectation (jj/mm/aaaa): ");
+                scanf(" %[^\n]", date);
+                affecterServiceReservation("services.txt", "reservations.txt", idReservation, idService, nom, prenom, date);
                 break;
             case 0:
                 printf("Au revoir!\n");
