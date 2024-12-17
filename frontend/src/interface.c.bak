@@ -1303,6 +1303,11 @@ create_ajouter_un_agent (void)
   GSList *radiobutton5_group = NULL;
   GtkWidget *radiobutton6;
   GSList *radiobutton6_group = NULL;
+  GtkWidget *button19;
+  GtkWidget *alignment21;
+  GtkWidget *hbox21;
+  GtkWidget *image28;
+  GtkWidget *label44;
   GtkWidget *button20;
   GtkWidget *alignment22;
   GtkWidget *hbox22;
@@ -1313,11 +1318,6 @@ create_ajouter_un_agent (void)
   GtkWidget *hbox23;
   GtkWidget *image30;
   GtkWidget *label46;
-  GtkWidget *button19;
-  GtkWidget *alignment21;
-  GtkWidget *hbox21;
-  GtkWidget *image28;
-  GtkWidget *label44;
 
   ajouter_un_agent = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (ajouter_un_agent), _("window2"));
@@ -1417,6 +1417,27 @@ create_ajouter_un_agent (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobutton6), radiobutton6_group);
   radiobutton6_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobutton6));
 
+  button19 = gtk_button_new ();
+  gtk_widget_show (button19);
+  gtk_fixed_put (GTK_FIXED (fixed7), button19, 408, 464);
+  gtk_widget_set_size_request (button19, 80, 29);
+
+  alignment21 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment21);
+  gtk_container_add (GTK_CONTAINER (button19), alignment21);
+
+  hbox21 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox21);
+  gtk_container_add (GTK_CONTAINER (alignment21), hbox21);
+
+  image28 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image28);
+  gtk_box_pack_start (GTK_BOX (hbox21), image28, FALSE, FALSE, 0);
+
+  label44 = gtk_label_new_with_mnemonic (_("Valider"));
+  gtk_widget_show (label44);
+  gtk_box_pack_start (GTK_BOX (hbox21), label44, FALSE, FALSE, 0);
+
   button20 = gtk_button_new ();
   gtk_widget_show (button20);
   gtk_fixed_put (GTK_FIXED (fixed7), button20, 504, 464);
@@ -1459,27 +1480,6 @@ create_ajouter_un_agent (void)
   gtk_widget_show (label46);
   gtk_box_pack_start (GTK_BOX (hbox23), label46, FALSE, FALSE, 0);
 
-  button19 = gtk_button_new ();
-  gtk_widget_show (button19);
-  gtk_fixed_put (GTK_FIXED (fixed7), button19, 408, 464);
-  gtk_widget_set_size_request (button19, 80, 29);
-
-  alignment21 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_show (alignment21);
-  gtk_container_add (GTK_CONTAINER (button19), alignment21);
-
-  hbox21 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_show (hbox21);
-  gtk_container_add (GTK_CONTAINER (alignment21), hbox21);
-
-  image28 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image28);
-  gtk_box_pack_start (GTK_BOX (hbox21), image28, FALSE, FALSE, 0);
-
-  label44 = gtk_label_new_with_mnemonic (_("Valider"));
-  gtk_widget_show (label44);
-  gtk_box_pack_start (GTK_BOX (hbox21), label44, FALSE, FALSE, 0);
-
   g_signal_connect ((gpointer) entry7, "changed",
                     G_CALLBACK (on_entry7_changed),
                     NULL);
@@ -1501,14 +1501,14 @@ create_ajouter_un_agent (void)
   g_signal_connect ((gpointer) radiobutton6, "toggled",
                     G_CALLBACK (on_radiobutton6_toggled),
                     NULL);
+  g_signal_connect ((gpointer) button19, "clicked",
+                    G_CALLBACK (on_button19_clicked),
+                    NULL);
   g_signal_connect ((gpointer) button20, "clicked",
                     G_CALLBACK (on_button20_clicked),
                     NULL);
   g_signal_connect ((gpointer) button21, "clicked",
                     G_CALLBACK (on_button21_clicked),
-                    NULL);
-  g_signal_connect ((gpointer) button19, "clicked",
-                    G_CALLBACK (on_button19_clicked),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -1529,6 +1529,11 @@ create_ajouter_un_agent (void)
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, label53, "label53");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, radiobutton5, "radiobutton5");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, radiobutton6, "radiobutton6");
+  GLADE_HOOKUP_OBJECT (ajouter_un_agent, button19, "button19");
+  GLADE_HOOKUP_OBJECT (ajouter_un_agent, alignment21, "alignment21");
+  GLADE_HOOKUP_OBJECT (ajouter_un_agent, hbox21, "hbox21");
+  GLADE_HOOKUP_OBJECT (ajouter_un_agent, image28, "image28");
+  GLADE_HOOKUP_OBJECT (ajouter_un_agent, label44, "label44");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, button20, "button20");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, alignment22, "alignment22");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, hbox22, "hbox22");
@@ -1539,11 +1544,6 @@ create_ajouter_un_agent (void)
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, hbox23, "hbox23");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, image30, "image30");
   GLADE_HOOKUP_OBJECT (ajouter_un_agent, label46, "label46");
-  GLADE_HOOKUP_OBJECT (ajouter_un_agent, button19, "button19");
-  GLADE_HOOKUP_OBJECT (ajouter_un_agent, alignment21, "alignment21");
-  GLADE_HOOKUP_OBJECT (ajouter_un_agent, hbox21, "hbox21");
-  GLADE_HOOKUP_OBJECT (ajouter_un_agent, image28, "image28");
-  GLADE_HOOKUP_OBJECT (ajouter_un_agent, label44, "label44");
 
   return ajouter_un_agent;
 }
