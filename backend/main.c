@@ -5,6 +5,7 @@
 #include "agent.h"
 #include "gestion_parking.h"
 #include "service.h"
+#include "reservation.h"
 
 int main() {
     int choix;
@@ -14,6 +15,16 @@ int main() {
     Service service;
     char date[20];
     char nom[100], prenom[100];
+
+    // Variables pour les réservations de parking
+    ParkingReservation reservations[MAX_PARKING_RESERVATIONS];
+    ParkingLocation parking_locations[MAX_PARKING_LOCATIONS];
+    int n_reservations = 0;
+    int n_parking_locations = 0;
+
+    // Charger les réservations et les emplacements de parking
+    n_reservations = load_parking_reservations(reservations, "parking_reservations.txt");
+    n_parking_locations = load_parking_locations(parking_locations, "parking_locations.txt");
 
     // Vérifier et créer les fichiers nécessaires s'ils n'existent pas
     if (access("reservations.txt", F_OK) == -1) {
@@ -39,6 +50,19 @@ int main() {
         if (file) fclose(file);
     }
 
+    // Fichiers pour les nouvelles réservations de parking
+    if (access("parking_reservations.txt", F_OK) == -1) {
+        printf("Le fichier parking_reservations.txt n'existe pas, création...\n");
+        FILE *file = fopen("parking_reservations.txt", "w");
+        if (file) fclose(file);
+    }
+
+    if (access("parking_locations.txt", F_OK) == -1) {
+        printf("Le fichier parking_locations.txt n'existe pas, création...\n");
+        FILE *file = fopen("parking_locations.txt", "w");
+        if (file) fclose(file);
+    }
+
     do {
         printf("\n--- Menu Principal de Gestion des Parkings, Agents et Services ---\n");
         printf("Gestion des Agents:\n");
@@ -61,7 +85,13 @@ int main() {
         printf("13. Supprimer un service\n");
         printf("14. Afficher tous les services\n");
         printf("15. Affecter un service à une réservation\n");
-        
+
+        printf("\nGestion des Réservations:\n");
+        printf("16. Ajouter une réservation de parking\n");
+        printf("17. Afficher les réservations de parking\n");
+        printf("18. Supprimer une réservation de parking\n");
+        printf("19. Afficher les emplacements de parking\n");
+
         printf("\n0. Quitter\n");
         printf("Choisissez une option: ");
 
@@ -70,7 +100,7 @@ int main() {
             while (getchar() != '\n');  // Consommer l'entrée incorrecte
             continue;
         }
-        getchar();  // pour consommer le '\n' laissé par scanf
+        getchar();   // pour consommer le '\n' laissé par scanf
 
         switch (choix) {
             // Gestion des Agents
@@ -224,7 +254,26 @@ int main() {
                 scanf(" %[^\n]", date);
                 affecterServiceReservation("services.txt", "reservations.txt", idReservation, idService, nom, prenom, date);
                 break;
+                        // Nouvelles options pour les réservations de parking
+            case 16:
+                create_parking_reservation("parking_reservations.txt");
+                break;
+            case 17:
+                display_parking_reservations_by_filename("parking_reservations.txt");
+                break;
+            case 18:
+                printf("Entrez l'ID de la réservation à supprimer: ");
+                scanf("%d", &id);
+                delete_parking_reservation("parking_reservations.txt", id);
+                break;
+            case 19:
+                list_available_parking_locations(parking_locations, n_parking_locations);
+                break;
+
             case 0:
+                // Sauvegarde des réservations et emplacements de parking avant de quitter
+                save_parking_reservations(reservations, n_reservations, "parking_reservations.txt");
+                save_parking_locations(parking_locations, n_parking_locations, "parking_locations.txt");
                 printf("Au revoir!\n");
                 break;
             default:
