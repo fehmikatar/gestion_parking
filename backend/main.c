@@ -6,6 +6,7 @@
 #include "gestion_parking.h"
 #include "service.h"
 #include "reservation.h"
+#include "citoyen.h" 
 
 int main() {
     int choix;
@@ -15,6 +16,7 @@ int main() {
     Service service;
     char date[20];
     char nom[100], prenom[100];
+    Citoyen citoyen; 
 
     // Variables pour les réservations de parking
     ParkingReservation reservations[MAX_PARKING_RESERVATIONS];
@@ -92,6 +94,13 @@ int main() {
         printf("18. Supprimer une réservation de parking\n");
         printf("19. Afficher les emplacements de parking\n");
 
+        printf("\nGestion des Citoyens:\n");
+        printf("20. Ajouter un citoyen\n");
+        printf("21. Modifier un citoyen\n");
+        printf("22. Supprimer un citoyen\n");
+        printf("23. Rechercher un citoyen\n");
+        printf("24. Générer une facture pour un citoyen\n");
+
         printf("\n0. Quitter\n");
         printf("Choisissez une option: ");
 
@@ -100,7 +109,7 @@ int main() {
             while (getchar() != '\n');  // Consommer l'entrée incorrecte
             continue;
         }
-        getchar();   // pour consommer le '\n' laissé par scanf
+        getchar();    // pour consommer le '\n' laissé par scanf
 
         switch (choix) {
             // Gestion des Agents
@@ -270,10 +279,93 @@ int main() {
                 list_available_parking_locations(parking_locations, n_parking_locations);
                 break;
 
+                // Gestion des Citoyens
+            case 20:
+                // Ajouter un citoyen
+                printf("Entrez l'ID du citoyen: ");
+                scanf("%s", citoyen.id);
+                printf("Entrez le nom du citoyen: ");
+                scanf("%s", citoyen.nom);
+                printf("Entrez le jour de naissance: ");
+                scanf("%d", &citoyen.naissance.jour);
+                printf("Entrez le mois de naissance: ");
+                scanf("%d", &citoyen.naissance.mois);
+                printf("Entrez l'année de naissance: ");
+                scanf("%d", &citoyen.naissance.annee);
+                printf("Entrez le gouvernorat: ");
+                scanf("%s", citoyen.gouvernorat);
+                printf("Entrez le sexe: ");
+                scanf("%s", citoyen.sexe);
+                
+                ajouter_citoyen(citoyen);
+                break;
+
+            case 21:
+                // Modifier un citoyen
+                printf("Entrez l'ID du citoyen à modifier: ");
+                scanf("%s", citoyen.id);
+                
+                printf("Entrez les nouvelles informations:\n");
+                printf("Nom: ");
+                scanf("%s", citoyen.nom);
+                printf("Jour de naissance: ");
+                scanf("%d", &citoyen.naissance.jour);
+                printf("Mois de naissance: ");
+                scanf("%d", &citoyen.naissance.mois);
+                printf("Année de naissance: ");
+                scanf("%d", &citoyen.naissance.annee);
+                printf("Gouvernorat: ");
+                scanf("%s", citoyen.gouvernorat);
+                printf("Sexe: ");
+                scanf("%s", citoyen.sexe);
+                
+                if (modifier_citoyen(citoyen.id, citoyen)) {
+                    printf("Citoyen modifié avec succès.\n");
+                } else {
+                    printf("Erreur de modification du citoyen.\n");
+                }
+                break;
+
+            case 22:
+                // Supprimer un citoyen
+                printf("Entrez l'ID du citoyen à supprimer: ");
+                scanf("%s", citoyen.id);
+                
+                if (supprimer_citoyen(citoyen.id)) {
+                    printf("Citoyen supprimé avec succès.\n");
+                } else {
+                    printf("Erreur de suppression du citoyen.\n");
+                }
+                break;
+
+            case 23:
+                // Rechercher un citoyen
+                printf("Entrez l'ID du citoyen à rechercher: ");
+                scanf("%s", citoyen.id);
+                
+                if (rechercher_citoyen_par_id(citoyen.id)) {
+                    printf("Citoyen trouvé.\n");
+                } else {
+                    printf("Citoyen non trouvé.\n");
+                }
+                break;
+
+            case 24:
+                // Générer une facture
+                printf("Entrez l'ID du citoyen: ");
+                scanf("%s", citoyen.id);
+                printf("Entrez l'année: ");
+                int annee;
+                scanf("%d", &annee);
+                printf("Entrez le mois: ");
+                int mois;
+                scanf("%d", &mois);
+                
+                generer_facture(citoyen.id, annee, mois);
+                break;
+
             case 0:
-                // Sauvegarde des réservations et emplacements de parking avant de quitter
-                save_parking_reservations(reservations, n_reservations, "parking_reservations.txt");
-                save_parking_locations(parking_locations, n_parking_locations, "parking_locations.txt");
+                // Sauvegarde et quitter
                 printf("Au revoir!\n");
                 break;
             default:
